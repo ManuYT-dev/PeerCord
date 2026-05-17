@@ -34,8 +34,13 @@ class AsyncBridge(QObject):
         asyncio.run_coroutine_threadsafe(coro, self._loop)
 
     def send_client_message(self, msg: str) -> None:
-        if self.channel and self.channel.readyState == "open":
-            self.channel.send(f"[User]: {msg}")
+        """Sendet eine Textnachricht an den Host (Thread-Safe!)."""
+
+        def _do_send():
+            if self.channel and self.channel.readyState == "open":
+                self.channel.send(f"[User]: {msg}")
+
+        self._loop.call_soon_threadsafe(_do_send)
 
     # ── WebRTC Verbindungsaufbau ─────────────────────────────
 

@@ -52,7 +52,9 @@ class AsyncBridge(QObject):
                 ch.send(message)
 
     def send_host_message(self, msg: str) -> None:
-        self.broadcast(f"[Host]: {msg}")
+        """Sendet eine Textnachricht (Thread-Safe!)."""
+        # Wir wecken den asyncio-Loop auf und lassen IHN senden, nicht die UI!
+        self._loop.call_soon_threadsafe(self.broadcast, f"[Host]: {msg}")
 
     # ── WebRTC-Verbindungsaufbau ─────────────────────────────
 
