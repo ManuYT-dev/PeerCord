@@ -12,10 +12,12 @@ PeerCord is a modern, serverless Peer-to-Peer (P2P) chat and file-sharing applic
 ---
 
 ## 📂 Project Structure
-The project is split into three main components:
-* `Host/` - The server/host application that accepts incoming peer connections.
-* `Client/` - The client application that initiates the connection.
-* `General/` - Shared resources (constants, colors, and the file transfer protocol) used by both Host and Client.
+The project is organized to separate source code from compiled binaries:
+* `src/Host/` - The server/host application that accepts incoming peer connections.
+* `src/Client/` - The client application that initiates the connection.
+* `src/General/` - Shared resources (constants, colors, and the file transfer protocol) used by both Host and Client.
+* `bin/` - The destination folder where the compiled `.exe` files and shortcuts are saved.
+* `compile.bat` - An automated batch script to compile the Python code into standalone Windows executables.
 
 ---
 
@@ -25,7 +27,7 @@ The project is split into three main components:
 * Python 3.8 or higher installed on your system.
 
 ### 1. Clone or Download the Repository
-Ensure you have the folder structure set up correctly with the `Host`, `Client`, and `General` folders in the same parent directory.
+Ensure you have the folder structure set up correctly on your machine.
 
 ### 2. Install Dependencies
 Open your terminal or command prompt and install the required Python libraries using pip:
@@ -37,18 +39,38 @@ pip install PyQt6 aiortc pyperclip
 
 ---
 
-## 🚀 How to Start
+## 📦 Compiling to Standalone Executables (.exe)
+If you want to run PeerCord without using the terminal or installing Python on every machine, you can compile it into standalone Windows executables using Nuitka. We provide an automated batch script to make this seamless.
 
-You will need at least two instances running to test the chat (one Host and one Client). You can run these on the same computer or on different computers across the internet.
+### 1. Install the Compiler
+First, ensure you have Nuitka installed via pip:
+```bash
+pip install nuitka
+```
+*(Note: During the first run, Nuitka might ask to download a C-Compiler or Dependency Walker. Simply type `Yes` and press Enter when prompted in the terminal).*
+
+### 2. Run the Build Script
+1. Navigate to the root folder of the project.
+2. Double-click the **`compile.bat`** file.
+3. The script will automatically clean up old builds, compile both the Host and Client into optimized `.exe` files, and organize them into the `bin` folder. *This process may take 5–15 minutes depending on your CPU.*
+
+### 3. Launching the Compiled App
+Once finished, open the newly created `bin` folder. 
+* Simply double-click the **`Start PeerCord Host`** or **`Start PeerCord Client`** shortcuts to launch the applications instantly!
+
+---
+
+## 🚀 How to Start from Source
+If you prefer to run the raw Python code instead of compiling it, you will need at least two instances running to test the chat (one Host and one Client). 
 
 **To start the Host:**
 ```bash
-python Host/main.py
+python src/Host/main.py
 ```
 
 **To start a Client:**
 ```bash
-python Client/main.py
+python src/Client/main.py
 ```
 
 ---
