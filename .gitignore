@@ -1,0 +1,15 @@
+.idea/
+.vscode/
+*.swp
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+Test/
+
+.env
+venv/
+env/
+ENV/
